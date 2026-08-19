@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto & Stock Market Intelligence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+#home {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 5%;
+  background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3');
+  background-size: cover;          
+  background-position: center;     
+  background-repeat: no-repeat;
+  color: white;                    /* makes text readable */
+  position: relative;
+}
+
+#home::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4); 
+  z-index: 1;
+}
+
+#home h1, #home h2, #home p {
+  position: relative;
+  z-index: 2;
+}
+    /* ===== GENERAL ===== */
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fff;
+      color: #000;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; margin: 0; }
+    section { padding: 80px 10%; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0; width: 100%;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 10%;
+      z-index: 1000;
+      transition: box-shadow 0.3s ease;
+      border-bottom: 1px solid #ccc;
+    }
+    .navbar.scrolled { box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
+    .navbar .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: navy;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+
+    .nav-links {
+      position: fixed;
+      top: 50px;
+      right: -200px;
+      width: 180px;
+      height: calc(100% - 50px);
+      background: #fff;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      padding-top: 20px;
+      gap: 15px;
+      transition: right 0.3s ease;
+      border-left: 1px solid #ccc;
+      display: flex;
+    }
+    .nav-links a {
+      color: navy;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .nav-links.active { right: 0; }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1100;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: navy;
+      transition: all 0.3s ease;
+    }
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active div:nth-child(2) { opacity: 0; }
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 5%;
+    }
+    .hero h1, .hero h2, .hero p { margin: 0; } 
+    .hero h1 { font-size: clamp(1.5rem, 5vw, 2.5rem); margin-bottom: 0.5rem; color: navy; }
+    .hero h2 { font-size: clamp(0.9rem, 3vw, 1.2rem); font-weight: 500; margin-bottom: 0.75rem; color: navy; }
+    .hero p { font-size: clamp(0.85rem, 2.5vw, 1rem); color: #fff; max-width: 600px; line-height: 1.6; margin-bottom: 0; }
+    .hero button { background: navy; border: none; color: #fff; padding: 12px 30px; font-size: 1rem; margin-top: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+    .hero button:hover { background: #333; }
+
+    /* ===== ABOUT ===== */
+    .about { text-align: center; }
+    .about p { color: #333; font-size: 1rem; max-width: 800px; margin: 20px auto; line-height: 1.7; }
+
+    /* ===== GALLERY ===== */
+    .gallery-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 20px 0;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+    }
+    .gallery-container::-webkit-scrollbar { height: 8px; }
+    .gallery-container::-webkit-scrollbar-thumb { background: navy; border-radius: 4px; }
+    .gallery-item {
+      flex: 0 0 auto;
+      width: 250px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      background: #f9f9f9;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+    }
+    .gallery-item .no-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      background: #ddd;
+      color: #555;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: bold;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .gallery-item p {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.3rem; }
+      .hero h2 { font-size: 1rem; }
+      .hero p { font-size: 0.85rem; }
+      .navbar .logo { font-size: 1.2rem; }
+      .nav-links a { font-size: 0.9rem; }
+      .gallery-item { width: 200px; }
+      .gallery-item img, .gallery-item .no-image { height: 120px; }
+    }
+
+
+#timeline-gallery .gallery-item {
+  flex: 0 0 auto;
+  width: 220px;
+  min-height: 120px;
+  background: #eef2f7;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#timeline-gallery .gallery-item p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+#insights-gallery .gallery-item {
+  flex: 0 0 auto;
+  width: 220px;
+  min-height: 120px;
+  background: #e8f5e9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#insights-gallery .gallery-item p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.progress-container {
+  background-color: #eee;
+  border-radius: 25px;
+  overflow: hidden;
+  margin: 15px 0;
+  height: 30px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%; /* Will be set dynamically */
+  background: linear-gradient(90deg, #ff4d4d, #ff0000);
+  text-align: center;
+  color: black; /* visible text */
+  font-weight: bold;
+  line-height: 30px;
+  transition: width 1s ease-in-out;
+}
+
+.goal-text {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  color: #333;
+}
+
+.copy-btn {
+  padding: 6px 12px;
+  background: #d63333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.copy-btn:hover {
+  background: #b52a2a;
+}
+
+body {
+  padding-top: 70px;
+}
+
+/* Dark mode global styles */
+body.dark {
+  background-color: #111;
+  color: #eee;
+}
+
+/* Override white backgrounds when in dark mode */
+body.dark .bg-white {
+  background-color: #222 !important;
+  color: #eee;
+}
+
+/* Optional: smooth background transition */
+body, button {
+  transition: background-color 0.3s, color 0.3s;
+}
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="logo">MarketPulse Intelligence</div>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="nav-links" id="navLinks">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#gallery">Market News</a>
+  <a href="#timeline">Market Timeline</a>
+  <a href="#insights">Insights</a>
+  <a href="#chart">Market Chart</a>
+</div>
+</nav>
+
+  <!-- ===== HERO ===== -->
+    <section id="home" class="hero">
+  <h1>Crypto & Stock Market Hub 2026</h1>
+  <h2>Real-Time Insights. Market Intelligence. Financial Growth.</h2>
+  <p>
+    Stay ahead with live updates on Bitcoin, Ethereum, global stock indices,
+    market trends, investment insights, and breaking financial news.
+    Data-driven intelligence for smart investors.
+  </p>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+<section id="about" class="about">
+  <h3>About MarketPulse</h3>
+  <p>
+    MarketPulse is a financial intelligence platform focused on cryptocurrency
+    and global stock markets. We provide real-time market news, trend analysis,
+    price movements, and investment insights to help traders and investors
+    make informed decisions.
+  </p>
+</section>
+
+<!-- Toggle Button -->
+<button id="themeToggle" 
+        class="fixed top-1/2 right-4 z-50 px-3 py-1 bg-navy text-white rounded-full shadow-md transform -translate-y-1/2 text-sm">
+  Dark Mode
+</button>
+
+  <!-- ===== GALLERY ===== -->
+  <section id="gallery" class="about">
+    <h3>Latest Crypto & Stock Market News</h3>
+    <div id="news-gallery" class="gallery-container"></div>
+  </section>
+
+<!-- ===== TIMELINE ===== -->
+<section id="timeline" class="about">
+  <h3>Market Timeline</h3>
+  <div id="timeline-gallery" class="gallery-container">
+    <div class="gallery-item" style="border-left: 5px solid green;">
+      <p><strong>2026-01-03</strong></p>
+      <p>Bitcoin surpasses $75,000 as institutional demand rises.</p>
+    </div>
+    <div class="gallery-item" style="border-left: 5px solid blue;">
+      <p><strong>2026-01-10</strong></p>
+      <p>Federal Reserve signals potential rate pause.</p>
+    </div>
+    <div class="gallery-item" style="border-left: 5px solid purple;">
+      <p><strong>2026-01-15</strong></p>
+      <p>Ethereum network upgrade improves scalability.</p>
+    </div>
+    <div class="gallery-item" style="border-left: 5px solid orange;">
+      <p><strong>2026-01-18</strong></p>
+      <p>Nasdaq hits record high amid AI sector rally.</p>
+    </div>
+  </div>
+</section>
+
+   <!-- ===== KEY INSIGHTS ===== -->
+   <section id="insights" class="about">
+  <h3>Market Insights</h3>
+  <div id="insights-gallery" class="gallery-container">
+    <div class="gallery-item" style="border-left: 5px solid #28a745;">
+      <p><strong>Crypto Volatility</strong></p>
+      <p>Digital assets remain highly volatile, creating both risk and opportunity.</p>
+    </div>
+    <div class="gallery-item" style="border-left: 5px solid #fd7e14;">
+      <p><strong>Federal Policy Impact</strong></p>
+      <p>Interest rate decisions significantly influence stock and crypto trends.</p>
+    </div>
+    <div class="gallery-item" style="border-left: 5px solid #20c997;">
+      <p><strong>Institutional Adoption</strong></p>
+      <p>Major firms continue increasing exposure to Bitcoin and ETFs.</p>
+    </div>
+    <div class="gallery-item" style="border-left: 5px solid #6f42c1;">
+      <p><strong>AI & Tech Stocks</strong></p>
+      <p>Technology and AI sectors remain primary growth drivers in equities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LIVE MARKET CHARTS ===== -->
+<section id="chart" class="about bg-blue-50 py-16">
+  <h3 class="text-2xl font-bold text-center text-navy mb-8">Live Market Charts</h3>
+
+  <!-- MEMECOINS -->
+  <div id="memecoins" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 mb-12">
+    <!-- Widgets will be injected here -->
+  </div>
+
+  <!-- ALTCOINS -->
+  <div id="altcoins" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 mb-12">
+  </div>
+
+  <!-- STOCKS -->
+  <div id="stocks" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4">
+  </div>
+</section>
+
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+
+  // ===== NAVBAR =====
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href')?.slice(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.scrollIntoView({behavior:'smooth'});
+          navLinks.classList.remove('active');
+          hamburger.classList.remove('active');
+        }
+      });
+    });
+  }
+
+  // ===== Navbar shadow =====
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+  }
+
+  // ===== NEWS FETCH =====
+  const apiKey = '7770c491fb534c8d910d9789a3e62832';
+  const gallery = document.getElementById('news-gallery');
+  let isFetching = false, currentPage = 1;
+
+  async function fetchNews() {
+    if (!gallery || isFetching) return;
+    isFetching = true;
+    try {
+      const proxy = 'https://api.allorigins.win/raw?url=';
+      const url = encodeURIComponent(`https://newsapi.org/v2/everything?q=cryptocurrency&language=en&sortBy=publishedAt&pageSize=20&page=${currentPage}&apiKey=${apiKey}`);
+      const res = await fetch(proxy + url);
+      const data = await res.json();
+      if (data.articles?.length) {
+        data.articles.forEach(a => {
+          const item = document.createElement('a');
+          item.className = 'gallery-item';
+          item.href = a.url;
+          item.target = '_blank';
+          item.innerHTML = `
+            ${a.urlToImage ? `<img src="${a.urlToImage}" alt="${a.title}">` : `<div class="no-image">No Image</div>`}
+            <p style="font-weight:bold;margin-top:8px;">${a.title}</p>
+            <p style="font-size:0.85rem;color:#555;margin-top:4px;">${a.description || ''}</p>
+          `;
+          gallery.appendChild(item);
+        });
+        currentPage++;
+      }
+    } catch(e) { console.error('News error', e); }
+    finally { isFetching = false; }
+  }
+  fetchNews();
+  if (gallery) gallery.addEventListener('scroll', () => {
+    if (gallery.scrollLeft + gallery.offsetWidth >= gallery.scrollWidth - 200) fetchNews();
+  });
+
+
+  // ===== Dynamic TradingView Widgets =====
+  function createTV(symbol, containerId) {
+    new TradingView.widget({
+      width: "100%",
+      height: "220",
+      symbol: symbol,
+      interval: "5",
+      timezone: "Etc/UTC",
+      theme: "light",
+      style: "1",
+      locale: "en",
+      toolbar_bg: "#f1f3f6",
+      enable_publishing: false,
+      withdateranges: true,
+      allow_symbol_change: true,
+      container_id: containerId
+    });
+  }
+
+  // ===== Arrays of symbols =====
+  const memecoins = ["BINANCE:DOGEUSDT","BINANCE:SHIBUSDT","BINANCE:FLOKIUSDT","BINANCE:KISHUUSDT","BINANCE:BABYDOGEUSDT"];
+  const altcoins = ["BINANCE:ETHUSDT","BINANCE:ADAUSDT","BINANCE:SOLUSDT","BINANCE:DOTUSDT","BINANCE:MATICUSDT"];
+  const stocks = ["NASDAQ:AAPL","NASDAQ:TSLA","NASDAQ:MSFT","NASDAQ:AMZN","NASDAQ:GOOGL"];
+
+  function generateWidgets(symbols, containerIdPrefix, parentDivId) {
+    const parentDiv = document.getElementById(parentDivId);
+    symbols.forEach((sym, idx) => {
+      // Create container div
+      const widgetDivId = containerIdPrefix + idx;
+      const widgetDiv = document.createElement('div');
+      widgetDiv.id = widgetDivId;
+      widgetDiv.className = "bg-white p-4 rounded-lg shadow";
+      parentDiv.appendChild(widgetDiv);
+
+      // Create the TradingView widget
+      createTV(sym, widgetDivId);
+    });
+  }
+
+  // Generate all sections
+  generateWidgets(memecoins, "tv-meme-", "memecoins");
+  generateWidgets(altcoins, "tv-alt-", "altcoins");
+  generateWidgets(stocks, "tv-stock-", "stocks");
+
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const themeToggle = document.getElementById('themeToggle');
+  let darkMode = false;
+
+  function setTheme(dark) {
+    darkMode = dark;
+    document.body.classList.toggle('dark', darkMode);
+    themeToggle.textContent = darkMode ? 'Light Mode' : 'Dark Mode';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    setTheme(!darkMode);
+  });
+});
+</script>
+</body>
+</html>
