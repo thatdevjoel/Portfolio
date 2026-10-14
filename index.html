@@ -177,7 +177,33 @@
       border-radius: 10px; transition: width 1.5s cubic-bezier(0.1, 0.42, 0.41, 1); 
     }
 
-    .skills { margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .skills { 
+      margin-top: 40px; 
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+      gap: 30px; 
+    }
+    .skill-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      min-width: 180px;
+    }
+    .skill-group h4 {
+      margin: 0 0 8px 0;
+      font-size: 1rem;
+      color: var(--primary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .skill-group .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
     .skill-tag {
       background: var(--card-bg);
       border: 1px solid var(--glass-border);
@@ -295,9 +321,9 @@
       <img id="profileImg" src="" alt="Joel's profile" class="profile-img" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid var(--primary); margin: 20px 0;">
     </div>
     <p>
-      I’m a full stack developer focused on creating clean, responsive, and interactive experiences on the web. 
-      I love combining design and logic — bringing ideas to life with HTML, CSS, and JavaScript <br><br>
-      On the backend, I work with <strong>Node.js</strong> and <strong>Express.js</strong> to build scalable APIs, while using <strong>HTML</strong> and <strong>CSS</strong> on the frontend to craft modern, responsive interfaces.
+      I’m a full stack developer and mobile app developer focused on creating clean, responsive, and interactive experiences on the web and mobile. 
+      I love combining design and logic — bringing ideas to life with HTML, CSS, JavaScript, React, and Expo. <br><br>
+      On the backend, I work with <strong>Node.js</strong> and <strong>Express.js</strong> to build scalable APIs, while using <strong>HTML</strong>, <strong>CSS</strong>, and <strong>React</strong> on the frontend to craft modern, responsive interfaces. For mobile, I build cross-platform apps with <strong>Expo</strong>, <strong>Expo Router</strong>, and <strong>TypeScript</strong>, and deploy them efficiently using <strong>EAS Build</strong>.
     </p>
 
     <div class="skills-container">
@@ -309,48 +335,75 @@
         <div class="skill-info"><span>Node.js / Backend</span><span>55%</span></div>
         <div class="progress-bg"><div class="progress-fill" data-percent="55%"></div></div>
       </div>
+      <div class="skill-wrapper">
+        <div class="skill-info"><span>Mobile (React Native / Expo)</span><span>30%</span></div>
+        <div class="progress-bg"><div class="progress-fill" data-percent="30%"></div></div>
+      </div>
     </div>
-   
+
    <div class="skills">
   <!-- Frontend -->
   <div class="skill-group">
     <h4>Frontend</h4>
-    <span class="skill-tag">HTML</span>
-    <span class="skill-tag">CSS</span>
-    <span class="skill-tag">JavaScript</span>
+    <div class="tags">
+      <span class="skill-tag">HTML</span>
+      <span class="skill-tag">CSS</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">React</span>
+      <span class="skill-tag">TypeScript</span>
+    </div>
+  </div>
+  <!-- Mobile -->
+  <div class="skill-group">
+    <h4>Mobile</h4>
+    <div class="tags">
+      <span class="skill-tag">Expo</span>
+      <span class="skill-tag">Expo Router</span>
+      <span class="skill-tag">EAS Build</span>
+    </div>
   </div>
   <!-- Backend -->
   <div class="skill-group">
     <h4>Backend</h4>
-    <span class="skill-tag">Node.js</span>
-    <span class="skill-tag">Express.js</span>
-    <span class="skill-tag">REST APIs</span>
+    <div class="tags">
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">Express.js</span>
+      <span class="skill-tag">REST APIs</span>
+    </div>
   </div>
   <!-- Backend as a Service -->
   <div class="skill-group">
     <h4>Backend Services (BaaS)</h4>
-    <span class="skill-tag">Supabase</span>
+    <div class="tags">
+      <span class="skill-tag">Supabase</span>
+    </div>
   </div>
   <!-- Databases -->
   <div class="skill-group">
     <h4>Databases</h4>
-    <span class="skill-tag">MongoDB</span>
-    <span class="skill-tag">PostgreSQL</span>
+    <div class="tags">
+      <span class="skill-tag">MongoDB</span>
+      <span class="skill-tag">PostgreSQL</span>
+    </div>
   </div>
   <!-- Deployment -->
   <div class="skill-group">
     <h4>Deployment</h4>
-    <span class="skill-tag">Vercel</span>
-    <span class="skill-tag">GitHub Pages</span>
+    <div class="tags">
+      <span class="skill-tag">Vercel</span>
+      <span class="skill-tag">GitHub Pages</span>
+    </div>
   </div>
   <!-- Hosting -->
   <div class="skill-group">
     <h4>Domain & Hosting</h4>
-    <span class="skill-tag">Domain</span>
-    <span class="skill-tag">DNS</span>
+    <div class="tags">
+      <span class="skill-tag">Domain</span>
+      <span class="skill-tag">DNS</span>
+    </div>
   </div>
 </div>
-   
+
     </div>
   </section>
 
@@ -379,7 +432,7 @@
     <h3>Contact Me</h3>
     <p>Have a project or idea in mind? Let's collaborate!</p>
     <div class="socials">
-  <a href="https://github.com/web-devjoel" target="_blank">
+  <a href="https://github.com/thatdevjoel" target="_blank">
     <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub">
   </a>
 
@@ -421,7 +474,7 @@
     document.querySelectorAll('[data-fade]').forEach(fader => appearOnScroll.observe(fader));
 
     const textElement = document.getElementById('typewriter');
-    const phrases = ["Full Stack Developer", "Mobile Builder", "Minimalist UI/UX Designer"];
+    const phrases = ["Android Developer", "Full Stack Developer", "Mobile App Developer", "Minimalist UI/UX Designer"];
     let phraseIndex = 0, charIndex = 0, isDeleting = false, typeSpeed = 100;
 
     function type() {
@@ -443,7 +496,7 @@
       if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
       type();
       particlesJS("particles-js", { "particles": { "number": { "value": 60 }, "color": { "value": "#ffffff" }, "line_linked": { "enable": true, "opacity": 0.1 }, "move": { "enable": true, "speed": 2 } } });
-      fetch('https://api.github.com/users/web-devjoel').then(r => r.json()).then(d => document.getElementById('profileImg').src = d.avatar_url);
+      fetch('https://api.github.com/users/thatdevjoel').then(r => r.json()).then(d => document.getElementById('profileImg').src = d.avatar_url);
     });
 
     document.getElementById('contactBtn').onclick = () => document.getElementById('contact').scrollIntoView();
